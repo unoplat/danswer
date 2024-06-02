@@ -1,7 +1,6 @@
 # Default values for danswer-stack.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
-
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
@@ -25,7 +24,7 @@ inferenceCapability:
     image:
       repository: danswer/danswer-model-server
       tag: latest
-      pullPolicy: IfNotPresent
+      pullPolicy: Always
     command: ["uvicorn", "model_server.main:app", "--host", "0.0.0.0", "--port", "9000"]
     port: 9000
     volumeMounts:
@@ -106,7 +105,7 @@ webserver:
   replicaCount: 1
   image:
     repository: danswer/danswer-web-server
-    pullPolicy: IfNotPresent
+    pullPolicy: Always
     # Overrides the image tag whose default is the chart appVersion.
     tag: ""
   deploymentLabels:
@@ -169,7 +168,7 @@ api:
   replicaCount: 1
   image:
     repository: danswer/danswer-backend
-    pullPolicy: IfNotPresent
+    pullPolicy: Always
     # Overrides the image tag whose default is the chart appVersion.
     tag: ""
   deploymentLabels:
@@ -234,7 +233,7 @@ background:
   replicaCount: 1
   image:
     repository: danswer/danswer-backend
-    pullPolicy: IfNotPresent
+    pullPolicy: Always
     # Overrides the image tag whose default is the chart appVersion.
     tag: latest
   podAnnotations: {}
@@ -291,10 +290,6 @@ background:
 
 vespa:
   replicaCount: 1
-  image:
-    repository: vespa
-    pullPolicy: IfNotPresent
-    tag: "8.277.17"
   podAnnotations: {}
   podLabels: 
     app: vespa
