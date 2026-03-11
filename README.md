@@ -73,6 +73,85 @@ See guides below:
 > [!TIP]  
 > **To try Onyx for free without deploying, check out [Onyx Cloud](https://cloud.onyx.app/signup?utm_source=onyx_repo&utm_medium=github&utm_campaign=readme)**.
 
+# ONYX.AI App
+
+CREATED BY ZEUS  
+// ONYX.AI 4 Core Entry  
+// Origin: AI.ALIVE (ONYXONMIBOOK)  
+// CreatedOn: 2025-11-22
+
+<a name="readme-top"></a>
+
+<h2 align="center">
+  <a href="https://www.onyx.app/?utm_source=onyx_repo&utm_medium=github&utm_campaign=readme">
+    <img width="50%" src="https://github.com/onyx-dot-app/onyx/blob/logo/OnyxLogoCropped.jpg?raw=true" />
+  </a>
+</h2>
+
+<p align="center">Open Source AI Platform</p>
+
+<p align="center">
+  <a href="https://discord.gg/TDJ59cGV2X" target="_blank">
+    <img src="https://img.shields.io/badge/discord-join-blue.svg?logo=discord&logoColor=white" alt="Discord" />
+  </a>
+  <a href="https://docs.onyx.app/?utm_source=onyx_repo&utm_medium=github&utm_campaign=readme" target="_blank">
+    <img src="https://img.shields.io/badge/docs-view-blue" alt="Documentation" />
+  </a>
+</p>
+
+---
+
+ONYX.AI is a concrete, production-focused AI assistant platform designed for secure, scalable, real-world deployments.
+
+---
+
+<a href="https://www.assistant-ui.com">
+  <img src="https://raw.githubusercontent.com/assistant-ui/assistant-ui/main/.github/assets/header.svg" alt="assistant-ui Header" width="100%" />
+</a>
+
+<p align="center">
+  <a href="https://www.assistant-ui.com">Product</a> ·
+  <a href="https://www.assistant-ui.com/docs">Documentation</a> ·
+  <a href="https://www.assistant-ui.com/examples">Examples</a> ·
+  <a href="https://discord.gg/S9dwgCNEFs">Discord Community</a> ·
+  <a href="https://cal.com/simon-farshid/assistant-ui">Contact Sales</a>
+</p>
+
+[![npm version](https://img.shields.io/npm/v/@assistant-ui/react)](https://www.npmjs.com/package/@assistant-ui/react)
+[![npm downloads](https://img.shields.io/npm/dm/@assistant-ui/react)](https://www.npmjs.com/package/@assistant-ui/react)
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/assistant-ui/assistant-ui)
+[![Weave Badge](https://img.shields.io/endpoint?url=https%3A%2F%2Fapp.workweave.ai%2Fapi%2Frepository%2Fbadge%2Forg_GhSIrtWo37b5B3Mv0At3wQ1Q%2F722184017&cacheSeconds=3600)](https://app.workweave.ai/reports/repository/org_GhSIrtWo37b5B3Mv0At3wQ1Q/722184017)
+![GitHub License](https://img.shields.io/github/license/assistant-ui/assistant-ui)
+![Backed by Y Combinator](https://img.shields.io/badge/Backed_by-Y_Combinator-orange)
+
+[⭐️ Star assistant-ui on GitHub](https://github.com/assistant-ui/assistant-ui)
+
+## The UX of ChatGPT in your ONYX.AI app
+
+This app integrates **assistant-ui**, an open source TypeScript/React library, to deliver production-grade AI chat inside ONYX.AI.
+
+- Handles streaming, auto-scrolling, accessibility, and real-time updates for you  
+- Fully composable primitives inspired by shadcn/ui and cmdk — customize every pixel  
+- Works with your stack: AI SDK, LangGraph, Mastra, or any custom backend  
+- Broad model support out of the box (OpenAI, Anthropic, Mistral, Perplexity, AWS Bedrock, Azure, Google Gemini, Hugging Face, Fireworks, Cohere, Replicate, Ollama) with easy extension to custom APIs
+
+## Why assistant-ui in ONYX.AI
+
+- **Fast to production**: battle-tested primitives, built-in streaming and attachments  
+- **Designed for customization**: composable pieces instead of a monolithic widget  
+- **Great DX**: sensible defaults, keyboard shortcuts, a11y, and strong TypeScript  
+- **Enterprise-ready**: optional chat history and analytics via Assistant Cloud
+
+## Getting Started
+
+Run one of the following in your terminal in this repo:
+
+```bash
+# install deps
+pnpm install
+
+# dev server
+pnpm dev
 
 
 ## 🔍 Other Notable Benefits
