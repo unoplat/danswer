@@ -11,13 +11,13 @@ from unittest.mock import patch
 from uuid import uuid4
 
 from onyx.background.celery.tasks.user_file_processing.tasks import (
-    _delete_user_file_impl,
+    delete_user_file_impl,
 )
 from onyx.background.celery.tasks.user_file_processing.tasks import (
-    _process_user_file_impl,
+    process_user_file_impl,
 )
 from onyx.background.celery.tasks.user_file_processing.tasks import (
-    _project_sync_user_file_impl,
+    project_sync_user_file_impl,
 )
 
 TASKS_MODULE = "onyx.background.celery.tasks.user_file_processing.tasks"
@@ -27,12 +27,11 @@ def _mock_session_returning_none() -> MagicMock:
     """Return a mock session whose .get() returns None (file not found)."""
     session = MagicMock()
     session.get.return_value = None
-    session.execute.return_value.scalar_one_or_none.return_value = None
     return session
 
 
 # ------------------------------------------------------------------
-# _process_user_file_impl
+# process_user_file_impl
 # ------------------------------------------------------------------
 
 
@@ -55,7 +54,7 @@ class TestProcessUserFileImpl:
         mock_get_session.return_value.__enter__.return_value = session
 
         user_file_id = str(uuid4())
-        _process_user_file_impl(
+        process_user_file_impl(
             user_file_id=user_file_id,
             tenant_id="test-tenant",
             redis_locking=True,
@@ -79,7 +78,7 @@ class TestProcessUserFileImpl:
         redis_client.lock.return_value = lock
         mock_get_redis.return_value = redis_client
 
-        _process_user_file_impl(
+        process_user_file_impl(
             user_file_id=str(uuid4()),
             tenant_id="test-tenant",
             redis_locking=True,
@@ -98,7 +97,7 @@ class TestProcessUserFileImpl:
         session = _mock_session_returning_none()
         mock_get_session.return_value.__enter__.return_value = session
 
-        _process_user_file_impl(
+        process_user_file_impl(
             user_file_id=str(uuid4()),
             tenant_id="test-tenant",
             redis_locking=False,
@@ -127,21 +126,21 @@ class TestProcessUserFileImpl:
 
         uid = str(uuid4())
 
-        _process_user_file_impl(user_file_id=uid, tenant_id="t", redis_locking=True)
+        process_user_file_impl(user_file_id=uid, tenant_id="t", redis_locking=True)
         call_count_true = session.get.call_count
 
         session.reset_mock()
         mock_get_session.reset_mock()
         mock_get_session.return_value.__enter__.return_value = session
 
-        _process_user_file_impl(user_file_id=uid, tenant_id="t", redis_locking=False)
+        process_user_file_impl(user_file_id=uid, tenant_id="t", redis_locking=False)
         call_count_false = session.get.call_count
 
         assert call_count_true == call_count_false == 1
 
 
 # ------------------------------------------------------------------
-# _delete_user_file_impl
+# delete_user_file_impl
 # ------------------------------------------------------------------
 
 
@@ -163,7 +162,7 @@ class TestDeleteUserFileImpl:
         session = _mock_session_returning_none()
         mock_get_session.return_value.__enter__.return_value = session
 
-        _delete_user_file_impl(
+        delete_user_file_impl(
             user_file_id=str(uuid4()),
             tenant_id="test-tenant",
             redis_locking=True,
@@ -186,7 +185,7 @@ class TestDeleteUserFileImpl:
         redis_client.lock.return_value = lock
         mock_get_redis.return_value = redis_client
 
-        _delete_user_file_impl(
+        delete_user_file_impl(
             user_file_id=str(uuid4()),
             tenant_id="test-tenant",
             redis_locking=True,
@@ -205,7 +204,7 @@ class TestDeleteUserFileImpl:
         session = _mock_session_returning_none()
         mock_get_session.return_value.__enter__.return_value = session
 
-        _delete_user_file_impl(
+        delete_user_file_impl(
             user_file_id=str(uuid4()),
             tenant_id="test-tenant",
             redis_locking=False,
@@ -216,10 +215,14 @@ class TestDeleteUserFileImpl:
 
 
 # ------------------------------------------------------------------
-# _project_sync_user_file_impl
+# project_sync_user_file_impl
 # ------------------------------------------------------------------
 
 
+@patch(
+    f"{TASKS_MODULE}.fetch_user_files_with_access_relationships",
+    return_value=[],
+)
 class TestProjectSyncUserFileImpl:
     @patch(f"{TASKS_MODULE}.get_session_with_current_tenant")
     @patch(f"{TASKS_MODULE}.get_redis_client")
@@ -227,6 +230,7 @@ class TestProjectSyncUserFileImpl:
         self,
         mock_get_redis: MagicMock,
         mock_get_session: MagicMock,
+        _mock_fetch: MagicMock,
     ) -> None:
         redis_client = MagicMock()
         lock = MagicMock()
@@ -238,7 +242,7 @@ class TestProjectSyncUserFileImpl:
         session = _mock_session_returning_none()
         mock_get_session.return_value.__enter__.return_value = session
 
-        _project_sync_user_file_impl(
+        project_sync_user_file_impl(
             user_file_id=str(uuid4()),
             tenant_id="test-tenant",
             redis_locking=True,
@@ -255,6 +259,7 @@ class TestProjectSyncUserFileImpl:
         self,
         mock_get_redis: MagicMock,
         mock_get_session: MagicMock,
+        _mock_fetch: MagicMock,
     ) -> None:
         redis_client = MagicMock()
         lock = MagicMock()
@@ -262,7 +267,7 @@ class TestProjectSyncUserFileImpl:
         redis_client.lock.return_value = lock
         mock_get_redis.return_value = redis_client
 
-        _project_sync_user_file_impl(
+        project_sync_user_file_impl(
             user_file_id=str(uuid4()),
             tenant_id="test-tenant",
             redis_locking=True,
@@ -277,11 +282,12 @@ class TestProjectSyncUserFileImpl:
         self,
         mock_get_redis: MagicMock,
         mock_get_session: MagicMock,
+        _mock_fetch: MagicMock,
     ) -> None:
         session = _mock_session_returning_none()
         mock_get_session.return_value.__enter__.return_value = session
 
-        _project_sync_user_file_impl(
+        project_sync_user_file_impl(
             user_file_id=str(uuid4()),
             tenant_id="test-tenant",
             redis_locking=False,
